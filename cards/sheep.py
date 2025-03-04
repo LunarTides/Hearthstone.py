@@ -1,7 +1,17 @@
-from src.card import Minion, CardRarity
+from src.card import CardClass, Minion, CardRarity, MinionTribe
 
-sheep = Minion(
+sheep1 = Minion(
+    # - Common -
     name="Sheep",
+    text="",
     cost=1,
-    rarity=CardRarity.FREE,
+    classes=[CardClass.NEUTRAL],
+    rarities=[CardRarity.FREE],
+    collectible=False,
+    tags=[],
+    unique_id=1,
+    # - Minion -
+    attack=1,
+    health=1,
+    tribes=[MinionTribe.BEAST],
 )
