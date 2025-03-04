@@ -12,6 +12,8 @@ class Game:
 
     interact: Interact = None
 
+    running = True
+
     def __init__(self):
         self.interact = Interact(self)
 

@@ -27,5 +27,22 @@ class Player:
         self.hand.append(card)
         card.location = CardLocation.HAND
 
+    def visualize_board(self, add_separator=False):
+        intro = f"[white]--- {self.name()}'s Board ---\n"
+        board = (
+            "\n".join([str(card) for card in self.board])
+            if len(self.board) > 0
+            else "[bright_black]None[/bright_black]"
+        )
+        outro = "\n------------------------" if add_separator else ""
+        return "".join([intro, board, outro])
+
     def visualize_hand(self):
-        return "\n".join([str(card) for card in self.hand])
+        return f"[white]--- {self.name()}'s Hand ---\n" + "\n".join(
+            [str(card) for card in self.hand]
+        )
+
+    def play_card(self, card: Card):
+        self.hand.remove(card)
+        self.board.append(card)
+        card.location = CardLocation.BOARD
