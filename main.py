@@ -1,8 +1,9 @@
+from rich import print
+
+import cards
+from src.card import Card
 from src.game import game
 from src.player import Player
-from src.card import Card
-from rich import print
-import cards
 
 
 def start_game():

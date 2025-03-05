@@ -78,7 +78,11 @@ class Card:
         self._unique_id = unique_id
 
     def __str__(self):
-        return f"[white][{self.index() + 1}][/white] {self.colorized_name()} [cyan]{{{self.cost}}}[/cyan]"
+        index = f"[white][{self.index() + 1}][/white]"
+        name = self.colorized_name()
+        cost = f"[cyan]{{{self.cost}}}[/cyan]"
+
+        return f"{index} {name} {cost}"
 
     @staticmethod
     def from_unique_id(unique_id: int) -> "Card":

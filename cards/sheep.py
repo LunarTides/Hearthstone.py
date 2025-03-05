@@ -1,4 +1,4 @@
-from src.card import CardClass, Minion, CardRarity, MinionTribe
+from src.card import CardClass, CardRarity, Minion, MinionTribe
 
 sheep1 = Minion(
     # - Common -

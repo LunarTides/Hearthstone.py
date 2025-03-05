@@ -1,7 +1,7 @@
 import random
 
-from .player import Player
 from .interact import Interact
+from .player import Player
 
 
 class Game:
