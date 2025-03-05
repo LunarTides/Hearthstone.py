@@ -2,13 +2,13 @@ from .card import Card, CardLocation
 
 
 class Player:
-    hand: list[Card] = []
-    deck: list[Card] = []
-    board: list[Card] = []
-    graveyard: list[Card] = []
-
     def __init__(self, game):
         self.game = game
+
+        self.hand: list[Card] = []
+        self.deck: list[Card] = []
+        self.board: list[Card] = []
+        self.graveyard: list[Card] = []
 
     def opponent(self):
         return (

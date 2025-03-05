@@ -14,6 +14,9 @@ def start_game():
 
 start_game()
 
+# Assert that the current player is not the next player
+assert game.current_player != game.next_player
+
 # Two ways to import a card
 sheep1 = cards.sheep1.copy(game.current_player)
 sheep2 = Card.from_unique_id(1).copy(game.current_player)

@@ -45,18 +45,6 @@ class CardTag(Enum):
 
 
 class Card:
-    player: "Player" = None
-    location = CardLocation.NONE
-
-    name = "Placeholder"
-    text = "Placeholder"
-    _cost = 0
-    classes = [CardClass.NEUTRAL]
-    rarities = [CardRarity.FREE]
-    collectible = False
-    tags: list[CardTag] = []
-    _unique_id = 0
-
     def __init__(
         self,
         name: str,
@@ -76,6 +64,9 @@ class Card:
         self.collectible = collectible
         self.tags = tags
         self._unique_id = unique_id
+
+        self.player: Player = None
+        self.location = CardLocation.NONE
 
     def __str__(self):
         index = f"[white][{self.index() + 1}][/white]"
@@ -121,7 +112,7 @@ class Card:
             case CardRarity.LEGENDARY:
                 return f"[yellow]{self.name}[/yellow]"
 
-    def copy(self, player: "Player" = None):
+    def copy(self, player: "Player"):
         card = Card(
             name=self.name,
             text=self.text,
