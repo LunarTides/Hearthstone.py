@@ -12,4 +12,13 @@ select = [
     "SIM",
     # isort
     "I",
+    # pydocstyle
+    "D",
+]
+
+ignore = [
+    "D100", # undocumented-public-module
+    "D104", # undocumented-public-package
+    "D203", # incorrect-blank-line-before-class
+    "D212", # multi-line-summary-first-line
 ]

@@ -1,0 +1,4 @@
+rich
+ruff
+pre-commit
+pytest

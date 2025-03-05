@@ -8,6 +8,7 @@ from src.player import Player
 
 
 def start_game():
+    """Start the game."""
     player1 = Player(game)
     player2 = Player(game)
     game.start(player1, player2)
@@ -20,7 +21,8 @@ assert game.current_player != game.next_player, (
     "Current player is the next player. Something has gone very wrong."
 )
 
-# Two ways to import a card
+# Two ways to import a card.
+# TODO: Remove
 sheep1 = cards.sheep1.copy(game.current_player)
 sheep2 = Card.from_unique_id(1).copy(game.next_player)
 
