@@ -65,7 +65,7 @@ class Card:
         self.tags = tags
         self._unique_id = unique_id
 
-        self.player: Player = None
+        self.owner: Player = None
         self.location = CardLocation.NONE
 
     def __str__(self):
@@ -124,19 +124,19 @@ class Card:
             unique_id=self.unique_id,
         )
 
-        card.player = player
+        card.owner = player
         return card
 
     def index(self):
         match self.location:
             case CardLocation.HAND:
-                return self.player.hand.index(self)
+                return self.owner.hand.index(self)
             case CardLocation.DECK:
-                return self.player.deck.index(self)
+                return self.owner.deck.index(self)
             case CardLocation.BOARD:
-                return self.player.board.index(self)
+                return self.owner.board.index(self)
             case CardLocation.GRAVEYARD:
-                return self.player.graveyard.index(self)
+                return self.owner.graveyard.index(self)
 
 
 class MinionTribe(Enum):
@@ -200,5 +200,5 @@ class Minion(Card):
             tribes=self.tribes,
         )
 
-        minion.player = player
+        minion.owner = player
         return minion
