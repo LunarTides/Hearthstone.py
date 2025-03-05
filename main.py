@@ -3,18 +3,9 @@ from rich import print
 import cards
 from src.card import Card
 from src.commands import CommandError
-from src.game import game
-from src.player import Player
+from src.game import create_game
 
-
-def start_game():
-    """Start the game."""
-    player1 = Player(game)
-    player2 = Player(game)
-    game.start(player1, player2)
-
-
-start_game()
+game = create_game()
 
 # Assert that the current player is not the next player
 assert game.current_player != game.next_player, (

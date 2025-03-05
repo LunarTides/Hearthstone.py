@@ -2,3 +2,4 @@ rich
 ruff
 pre-commit
 pytest
+pytest-cov

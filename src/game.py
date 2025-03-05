@@ -52,4 +52,12 @@ class Game:
         self.next_player = current_player
 
 
-game = Game()
+def create_game():
+    """Create a new game, start it, and return it."""
+    game = Game()
+
+    player1 = Player(game)
+    player2 = Player(game)
+
+    game.start(player1, player2)
+    return game
