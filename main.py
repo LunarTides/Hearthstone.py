@@ -27,7 +27,7 @@ sheep1 = cards.sheep1.copy(game.current_player)
 sheep2 = Card.from_unique_id(1).copy(game.next_player)
 
 # I know :)
-sheep1._cost = 9
+sheep1._cost = 2
 
 game.current_player.add_to_hand(sheep1)
 game.next_player.add_to_hand(sheep2)

@@ -1,5 +1,6 @@
+import copy
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
     from src.player import Player
@@ -52,6 +53,36 @@ class CardTag(Enum):
     QUEST = 4
 
 
+class CardAbility(Enum):
+    """Represents a Card Ability."""
+
+    ADAPT = 0
+    BATTLECRY = 1
+    CAST = 2
+    COMBO = 3
+    DEATHRATTLE = 4
+    FINALE = 5
+    FRENZY = 6
+    HONORABLE_KILL = 7
+    INFUSE = 8
+    INSPIRE = 9
+    INVOKE = 10
+    OUTCAST = 11
+    OVERHEAL = 12
+    OVERKILL = 13
+    PASSIVE = 14
+    SPELLBURST = 15
+    START_OF_GAME = 16
+    HEROPOWER = 17
+    USE = 18
+
+    PLACEHOLDER = 19
+    CONDITION = 20
+    REMOVE = 21
+    TICK = 22
+    CREATE = 23
+
+
 class Card:
     """
     Represents a card in the game.
@@ -84,13 +115,16 @@ class Card:
         self.owner: Player = None
         self.location = CardLocation.NONE
 
+        self.abilities: dict[CardAbility, list[Callable]] = {}
+
     def __str__(self):
         """Return a string representation of this card."""
         index = f"[white][{self.index() + 1}][/white]"
-        name = self.colorized_name()
         cost = f"[cyan]{{{self.cost}}}[/cyan]"
+        name = self.colorized_name()
+        text = f"({self.text})"
 
-        return f"{index} {name} {cost}"
+        return f"{index} {cost} {name} {text}"
 
     @staticmethod
     def from_unique_id(unique_id: int) -> "Card":
@@ -155,6 +189,8 @@ class Card:
             unique_id=self.unique_id,
         )
 
+        card.abilities = copy.deepcopy(self.abilities)
+
         card.owner = player
         return card
 
@@ -178,6 +214,19 @@ class Card:
     def can_be_on_board(self) -> bool:
         """Return true if this card can be summoned onto the board."""
         return False
+
+    def add_ability(self, ability: CardAbility, func: Callable):
+        """Add an ability to this card."""
+        if ability not in self.abilities:
+            self.abilities[ability] = []
+
+        self.abilities[ability].append(func)
+
+    def trigger_ability(self, ability: CardAbility):
+        """Trigger an ability on this card."""
+        if ability in self.abilities:
+            for func in self.abilities[ability]:
+                func(self, self.owner.game, self.owner)
 
 
 class MinionTribe(Enum):
@@ -232,7 +281,11 @@ class Minion(Card):
 
     def __str__(self):
         """Return a string representation of this minion."""
-        return f"{super().__str__()}"
+        original = super().__str__()
+        stats = f"[green][{self.attack} / {self.health}][/green]"
+        type_str = "[yellow](Minion)[/yellow]"
+
+        return f"{original} {stats} {type_str}"
 
     def copy(self, player: "Player" = None):
         """Return a copy of this minion, owned by the given player."""
@@ -249,6 +302,8 @@ class Minion(Card):
             health=self.health,
             tribes=self.tribes,
         )
+
+        minion.abilities = copy.deepcopy(self.abilities)
 
         minion.owner = player
         return minion

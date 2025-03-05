@@ -30,7 +30,7 @@ class Game:
         self.commands = Commands(self)
 
     def start(self, player1: Player, player2: Player):
-        """Set up the game and starts it."""
+        """Set up the game and start it."""
         # Set a random player to be the starting player.
         self.player1 = random.choice([player1, player2])
         self.player2 = player1 if self.player1 == player2 else player2

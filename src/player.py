@@ -1,4 +1,4 @@
-from .card import Card, CardLocation
+from .card import Card, CardAbility, CardLocation
 
 
 class Player:
@@ -79,6 +79,7 @@ class Player:
         self.hand.remove(card)
 
         if card.can_be_on_board():
+            card.trigger_ability(CardAbility.BATTLECRY)
             self.summon_card(card)
 
     def summon_card(self, card: Card):
