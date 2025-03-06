@@ -178,20 +178,9 @@ class Card:
 
     def copy(self, player: "Player"):
         """Return a copy of this card, owned by the given player."""
-        card = Card(
-            name=self.name,
-            text=self.text,
-            cost=self.cost,
-            classes=self.classes,
-            rarities=self.rarities,
-            collectible=self.collectible,
-            tags=self.tags,
-            unique_id=self.unique_id,
-        )
-
-        card.abilities = copy.deepcopy(self.abilities)
-
-        card.owner = player
+        # TODO: Maybe use `copy.deepcopy`?
+        card = copy.copy(self)
+        card.owner = player or self.owner
         return card
 
     def index(self):
@@ -286,27 +275,6 @@ class Minion(Card):
         type_str = "[yellow](Minion)[/yellow]"
 
         return f"{original} {stats} {type_str}"
-
-    def copy(self, player: "Player" = None):
-        """Return a copy of this minion, owned by the given player."""
-        minion = Minion(
-            name=self.name,
-            text=self.text,
-            cost=self.cost,
-            classes=self.classes,
-            rarities=self.rarities,
-            collectible=self.collectible,
-            tags=self.tags,
-            unique_id=self.unique_id,
-            attack=self.attack,
-            health=self.health,
-            tribes=self.tribes,
-        )
-
-        minion.abilities = copy.deepcopy(self.abilities)
-
-        minion.owner = player
-        return minion
 
     def can_be_on_board(self):
         """Return true."""

@@ -1,4 +1,6 @@
 from src.card import Card, CardAbility, CardClass, CardRarity, Minion, MinionTribe
+from src.game import Game
+from src.player import Player
 
 sheep1 = Minion(
     # - Common -
@@ -17,9 +19,9 @@ sheep1 = Minion(
 )
 
 
-def battlecry(self, game, owner):
+def battlecry(self: Card, game: Game, owner: Player):
     """Battlecry: Add a copy of this minion to your hand which costs 1 more."""
-    card = Card.from_unique_id(1).copy(owner)
+    card = self.copy(owner)
     card._cost = self.cost + 1
     owner.add_to_hand(card)
 
