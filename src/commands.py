@@ -1,9 +1,12 @@
-class CommandError(Exception):
+from .utils import GameError
+
+
+class CommandError(GameError):
     """Base class for command errors."""
 
     def __init__(self, message: str):
         """Initialize the command error."""
-        self.message = message
+        super().__init__(message)
 
 
 class InvalidCommandError(CommandError):

@@ -1,4 +1,5 @@
 from .card import Card, CardAbility, CardLocation
+from .utils import GameError
 
 
 class Player:
@@ -14,11 +15,22 @@ class Player:
         """Initialize a player."""
         self.game = game
 
-        self.id = 0
+        # Health
+        self.health = 30
+        self.max_health = 30
+
+        # Mana
+        self.empty_mana = 0
+        self.mana = 0
+        self.max_mana = 10
+
+        # Card Locations
         self.hand: list[Card] = []
         self.deck: list[Card] = []
         self.board: list[Card] = []
         self.graveyard: list[Card] = []
+
+        self.id = 0
 
     def opponent(self) -> "Player":
         """Return the opposing player."""
@@ -40,12 +52,30 @@ class Player:
         """Return the name of this player."""
         return "Player 1" if self.is_starting_player() else "Player 2"
 
+    def add_empty_mana(self, amount: int):
+        """
+        Add empty mana to this player.
+
+        Automatically caps at the maximum mana.
+        """
+        self.empty_mana = min(self.empty_mana + amount, self.max_mana)
+
     def add_to_hand(self, card: Card):
         """Add a card to this player's hand."""
         assert card.owner == self, "Card must be owned by the player."
 
         self.hand.append(card)
         card.location = CardLocation.HAND
+
+    def visualize_state(self):
+        """Return a string representation of this player's state."""
+        mana = f"[white]Mana: [cyan]{self.mana}[/cyan] / [cyan]{self.empty_mana}[/cyan]"
+        health = (
+            f"[white]Health: [red]{self.health}[/red] / [red]{self.max_health}[/red]"
+        )
+        sizes = f"[white]Deck Size: [yellow]{len(self.deck)}[/yellow] & [yellow]{len(self.hand)}[/yellow]"  # noqa: E501
+
+        return "\n".join([mana, health, sizes])
 
     def visualize_board(self, add_separator=False):
         """Return a string representation of this player's board."""
@@ -76,6 +106,10 @@ class Player:
 
     def play_card(self, card: Card):
         """Play a card from this player's hand."""
+        if self.mana < card.cost:
+            raise GameError("Not enough mana.")
+
+        self.mana -= card.cost
         self.hand.remove(card)
 
         if card.can_be_on_board():
