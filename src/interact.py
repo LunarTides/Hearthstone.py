@@ -23,6 +23,6 @@ class Interact:
 
         # Join the two stats using a "|"
         bricks = [player1[i] + " | " + player2[i] for i in range(len(player1))]
-        wall = self.game.utils.create_wall(bricks, "|")
+        wall = self.game.utils.align_columns(bricks, "|")
 
         return "\n".join(wall)

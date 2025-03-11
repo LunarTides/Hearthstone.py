@@ -16,26 +16,31 @@ class Utils:
         """Initialize the utils class."""
         self.game = game
 
-    def create_wall(self, bricks, separator):
+    def align_columns(self, columns, separator):
         """
-        Create a wall.
+        Align columns by padding them with spaces.
 
-        Walls are a formatting tool for strings which makes them easier to read.
+        This function takes a list of strings and pads them with spaces to make them
+        the same length.
+
+        >>> align_columns(["Short | Long", "Longer | Doesn't matter", "A | B"], "|")
+        ["Short  | Long", "Longer | Doesn't matter", "A      | B"]
+
         """
-        longest_brick = max(
-            bricks, key=lambda x: len(self.strip_color_tags(x.split(separator)[0]))
+        longest_column = max(
+            columns, key=lambda x: len(self.strip_color_tags(x.split(separator)[0]))
         )
 
-        wall = []
-        for brick in bricks:
-            left, right = brick.split(separator)
+        aligned_columns = []
+        for column in columns:
+            left, right = column.split(separator)
             difference = len(
-                self.strip_color_tags(longest_brick.split(separator)[0])
+                self.strip_color_tags(longest_column.split(separator)[0])
             ) - len(self.strip_color_tags(left))
 
-            wall.append(left + " " * difference + separator + right)
+            aligned_columns.append(left + " " * difference + separator + right)
 
-        return wall
+        return aligned_columns
 
     def strip_color_tags(self, string):
         """Remove color tags from a string."""
